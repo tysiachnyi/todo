@@ -1,24 +1,63 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import './todo-list-item.css';
 
-const TodoListItem = ({ label, important = false }) => {
+export default class TodoListItem extends Component{
 
-  const style = {
-    color: important ? 'steelblue' : 'black',
-    fontWeight: important ? 'bold' : 'normal'
-  };
+    // old method
+    // constructor() {
+    //     super();
+    //
+    //     this.onLabelClick = () => {
+    //         console.log(`Done: ${ this.props.label}`);
+    //     };
+    // }
+    // old method
 
-  return (
-    <span className="todo-list-item">
+    state = {
+        done:false,
+        important: false
+    };
+
+    onLabelClick = () => {
+            this.setState({
+                done:!this.state.done
+            });
+    };
+
+    onMarkImportant = () => {
+            this.setState({
+                important:!this.state.important
+            })
+
+    };
+
+
+    render() {
+
+        const {label} = this.props;
+        const {done, important} = this.state;
+
+        let classNames = 'todo-list-item';
+        if(done){
+            classNames += ' done';
+        }
+        if(important){
+            classNames += ' important';
+        }
+
+        return (
+            <span className={classNames}>
       <span
-        className="todo-list-item-label"
-        style={style}>
-        {label}
+          className="todo-list-item-label"
+          onClick={this.onLabelClick}
+      >{label}
       </span>
 
       <button type="button"
-              className="btn btn-outline-success btn-sm float-right">
+              className="btn btn-outline-success btn-sm float-right"
+              onClick={this.onMarkImportant}
+      >
         <i className="fa fa-exclamation" />
       </button>
 
@@ -27,7 +66,9 @@ const TodoListItem = ({ label, important = false }) => {
         <i className="fa fa-trash-o" />
       </button>
     </span>
-  );
-};
+        );
+    }
+}
 
-export default TodoListItem;
+
+
