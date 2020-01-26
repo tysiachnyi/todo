@@ -1,8 +1,12 @@
 import React from "react";
 
-const TodoLostItem = () => {
+const TodoLostItem = ({label, important = false }) => {
+    const style = {
+        color: important ? 'tomato': 'black'
+    };
     return(
-        <span>Drink Coffee</span>
+
+        <span style={style}>{label}</span>
     )
 }
 
