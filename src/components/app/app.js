@@ -66,6 +66,10 @@ export default class App extends Component {
 
     onToggleImportant = (id) => {
 
+
+    };
+
+    onToggleDone = (id) => {
         this.setState(({todoData})=>{
             const idx = todoData.findIndex((el)=>el.id === id )
             // 1.
@@ -85,18 +89,14 @@ export default class App extends Component {
         });
     };
 
-    onToggleDone = (id) => {
-        console.log('Toggle done', id)
-    };
-
 
 
 
     render() {
 
-
-        const doneCount = this.state.todoData.filter((el) => el.done).length;
-        const todoCount = this.state.todoData.length - doneCount;
+        const { todoData} = this.state
+        const doneCount = todoData.filter((el) => el.done).length;
+        const todoCount = todoData.length - doneCount;
         return (
             <div className="todo-app">
                 <AppHeader toDo={todoCount} done={doneCount} />
