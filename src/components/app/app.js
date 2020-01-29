@@ -65,7 +65,24 @@ export default class App extends Component {
     };
 
     onToggleImportant = (id) => {
-        console.log('Toggle important', id)
+
+        this.setState(({todoData})=>{
+            const idx = todoData.findIndex((el)=>el.id === id )
+            // 1.
+            const oldItem = todoData[idx];
+            const newItem = {...oldItem, done: !oldItem.done}
+            // 2.
+            const newArray = [
+                ...todoData.slice(0, idx),
+                newItem,
+                ...todoData.slice(idx + 1)
+            ];
+
+            return{
+                todoData: newArray
+            };
+
+        });
     };
 
     onToggleDone = (id) => {
@@ -76,9 +93,13 @@ export default class App extends Component {
 
 
     render() {
+
+
+        const doneCount = this.state.todoData.filter((el) => el.done).length;
+        const todoCount = this.state.todoData.length - doneCount;
         return (
             <div className="todo-app">
-                <AppHeader toDo={1} done={3} />
+                <AppHeader toDo={todoCount} done={doneCount} />
                 <div className="top-panel d-flex">
                     <SearchPanel />
                     <ItemStatusFilter />
